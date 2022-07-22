@@ -35,22 +35,30 @@ searchButton?.addEventListener('click', async () => {
         lista.outerHTML = "";
     }
     let query = document.getElementById('search') as HTMLInputElement;
-    let listaDeFilmes: any = await procurarFilme(query.value);
-    let ul = document.createElement('ul');
 
-    ul.id = "lista"
-    for (const item of listaDeFilmes.results) {
-        let li = document.createElement('li');
-        let img = document.createElement('img');
+    if (query.value != "") {
+        let listaDeFilmes: any = await procurarFilme(query.value);
+        let ul = document.createElement('ul');
 
-        li.appendChild(document.createTextNode(item.original_title))
-        img.src = `https://image.tmdb.org/t/p/w200` + (item.poster_path ? item.poster_path : '/wwemzKWzjKYJFfCeiB57q3r4Bcm.png' );
+        ul.id = "lista"
+        for (const item of listaDeFilmes.results) {
+            let li = document.createElement('li');
+            let li2 = document.createElement('li');
+            let img = document.createElement('img');
 
-        ul.appendChild(li)
-        ul.appendChild(img)
+            li.appendChild(document.createTextNode('Titulo : ' + item.original_title));
+            li2.appendChild(document.createTextNode('Idioma : ' + item.original_language));
+            img.src = `https://image.tmdb.org/t/p/w200` + (item.backdrop_path ? item.backdrop_path : '/wwemzKWzjKYJFfCeiB57q3r4Bcm.png');
+
+            ul.appendChild(li);
+            ul.appendChild(li2);
+            ul.appendChild(img);
+        }
+        console.log(listaDeFilmes);
+        searchContainer?.appendChild(ul);
+    } else {
+        alert('Digite nome do filme desejado');
     }
-    console.log(listaDeFilmes);
-    searchContainer?.appendChild(ul);
 })
 
 
